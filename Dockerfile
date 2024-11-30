@@ -1,5 +1,3 @@
-FROM jboss/keycloak:16.1.1
-COPY realm-export.json /tmp/realm-export.json
-COPY standalone-ha.xml opt/jboss/keycloak/standalone/configuration/standalone-ha.xml
-ENV KEYCLOAK_IMPORT=/tmp/realm-export.json
-ENTRYPOINT [ "/opt/jboss/tools/docker-entrypoint.sh" ]
+FROM quay.io/keycloak/keycloak:26.0.6
+COPY realm-export.json /opt/keycloak/data/import/realm-export.json
+ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start-dev", "--import-realm", "--http-port", "8081"]
